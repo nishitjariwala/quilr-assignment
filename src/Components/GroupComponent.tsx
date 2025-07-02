@@ -1,8 +1,8 @@
 import React from "react";
 import { fields, operators, logicOptions } from "../constants";
 import { Group, Condition, Field, Operator, Logic } from "../schema/schemas";
-import SelectBox from "./SelectBox";
 import { Button } from "@mui/material";
+import SelectComponent from "./SelectComponent";
 
 
 const GroupComponent = ({
@@ -14,9 +14,11 @@ const GroupComponent = ({
     onChange: (updated: Group) => void;
     onRemove?: () => void;
 }) => {
+
     const updateCondition = (index: number, updated: Condition | Group) => {
         const updatedConditions = [...group.conditions];
         updatedConditions[index] = updated;
+        console.log(updatedConditions);
         onChange({ ...group, conditions: updatedConditions });
     };
 
@@ -34,7 +36,10 @@ const GroupComponent = ({
         });
     };
 
+
+
     const addGroup = () => {
+
         onChange({
             ...group,
             conditions: [
@@ -50,14 +55,15 @@ const GroupComponent = ({
     const removeCondition = (index: number) => {
         const updated = [...group.conditions];
         updated.splice(index, 1);
+        
         onChange({ ...group, conditions: updated });
     };
 
     return (
-        <div className="space-y-4 border  p-4 rounded-lg  shadow-sm">
+        <div className="space-y-4 border  p-4 rounded-lg shadow-sm">
             <div className="flex items-center gap-4">
-                <label className="text-sm font-medium text-gray-700">Logic:</label>
-                <SelectBox
+                <label className="text-sm font-medium">Logic:</label>
+                <SelectComponent
                     label="Logic"
                     value={group.logic}
                     options={logicOptions}
@@ -76,14 +82,15 @@ const GroupComponent = ({
                 )}
             </div>
 
-            <div className="space-y-4 pl-4 border-l-2 border-gray-200">
+            <div className="space-y-4 pl-4 border-l-2 border-gray">
                 {group.conditions.map((condition, index) =>
                     "field" in condition ? (
                         <div
                             key={index}
                             className="flex flex-wrap items-center gap-4 p-3 rounded-md"
                         >
-                            <SelectBox
+
+                            <SelectComponent
                                 label="Field"
                                 value={condition.field}
                                 options={Object.keys(fields)}
@@ -95,7 +102,7 @@ const GroupComponent = ({
                                     })
                                 }
                             />
-                            <SelectBox
+                            <SelectComponent
                                 label="Operator"
                                 value={condition.operator}
                                 options={operators}
@@ -103,7 +110,7 @@ const GroupComponent = ({
                                     updateCondition(index, { ...condition, operator: val as Operator })
                                 }
                             />
-                            <SelectBox
+                            <SelectComponent
                                 label="Value"
                                 value={condition.value}
                                 options={fields[condition.field]}

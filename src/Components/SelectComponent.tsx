@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-const SelectBox = ({
+const SelectComponent = ({
     label,
     value,
     options,
@@ -30,4 +30,4 @@ const SelectBox = ({
     </Box>
 );
 
-export default SelectBox;
+export default SelectComponent;
